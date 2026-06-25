@@ -1,0 +1,836 @@
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --void: #060608;
+    --carbon: #0e0e18;
+    --panel: #12121f;
+    --violet: #9B30FF;
+    --violet-dim: #6B1FBF;
+    --cyan: #00F0FF;
+    --white: #F0F4FF;
+    --muted: #7a7a9a;
+    --glow-v: rgba(155,48,255,0.35);
+    --glow-c: rgba(0,240,255,0.25);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--void);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── NAVBAR ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 40px;
+    background: rgba(6,6,8,0.75);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(155,48,255,0.15);
+  }
+
+  .logo {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: 1.2rem;
+    letter-spacing: 0.1em;
+    color: var(--white);
+  }
+  .logo span { color: var(--violet); }
+
+  .nav-cta {
+    background: var(--violet);
+    color: #fff;
+    border: none;
+    padding: 10px 24px;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    transition: background 0.2s, box-shadow 0.2s;
+  }
+  .nav-cta:hover {
+    background: #b44fff;
+    box-shadow: 0 0 24px var(--glow-v);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 120px 24px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 80%, rgba(155,48,255,0.28) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 30% at 20% 60%, rgba(0,240,255,0.12) 0%, transparent 60%),
+      linear-gradient(180deg, #060608 0%, #0a0a18 100%);
+    animation: breathe 6s ease-in-out infinite;
+  }
+
+  @keyframes breathe {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.75; }
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--violet);
+    color: var(--violet);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    margin-bottom: 28px;
+    position: relative;
+    z-index: 1;
+  }
+  .badge::before { content: ''; width: 6px; height: 6px; background: var(--violet); border-radius: 50%; animation: pulse-dot 2s infinite; }
+  @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.4)} }
+
+  .hero h1 {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: clamp(2.4rem, 8vw, 5.5rem);
+    line-height: 1.05;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    background: linear-gradient(90deg, var(--violet), var(--cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    margin-top: 24px;
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    font-weight: 300;
+    color: var(--muted);
+    max-width: 520px;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-actions {
+    margin-top: 44px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--violet), #6B1FBF);
+    color: #fff;
+    border: none;
+    padding: 18px 40px;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+    transition: box-shadow 0.3s, transform 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-primary:hover {
+    box-shadow: 0 0 40px var(--glow-v), 0 0 80px rgba(155,48,255,0.15);
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 18px 32px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .btn-secondary:hover { color: var(--white); border-color: rgba(255,255,255,0.3); }
+
+  .hero-price-tag {
+    position: relative;
+    z-index: 1;
+    margin-top: 32px;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 12px;
+  }
+  .price-old {
+    font-size: 1rem;
+    color: var(--muted);
+    text-decoration: line-through;
+  }
+  .price-new {
+    font-family: 'Orbitron', monospace;
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--cyan);
+  }
+  .price-label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── PROOF STRIP ── */
+  .proof-strip {
+    background: var(--carbon);
+    border-top: 1px solid rgba(155,48,255,0.1);
+    border-bottom: 1px solid rgba(155,48,255,0.1);
+    padding: 20px 40px;
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+  .proof-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .proof-icon {
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--violet);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+
+  /* ── SECTIONS COMMUNES ── */
+  section {
+    padding: 90px 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--violet);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::after { content: ''; flex: 0 0 40px; height: 1px; background: var(--violet); }
+
+  .section-title {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(1.6rem, 4vw, 2.6rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.1;
+    max-width: 700px;
+  }
+
+  /* ── FEATURES ── */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2px;
+    margin-top: 56px;
+    background: rgba(155,48,255,0.08);
+    border: 1px solid rgba(155,48,255,0.12);
+  }
+
+  .feature-card {
+    background: var(--panel);
+    padding: 36px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+  .feature-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--violet), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .feature-card:hover { background: #181828; }
+  .feature-card:hover::after { opacity: 1; }
+
+  .feature-number {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--violet-dim);
+    margin-bottom: 20px;
+  }
+
+  .feature-icon-wrap {
+    width: 48px;
+    height: 48px;
+    background: rgba(155,48,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    border: 1px solid rgba(155,48,255,0.2);
+  }
+
+  .feature-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+    color: var(--white);
+  }
+
+  .feature-desc {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  /* ── COULEURS DÉMO ── */
+  .colors-section {
+    background: var(--carbon);
+    padding: 90px 24px;
+    border-top: 1px solid rgba(0,240,255,0.08);
+    border-bottom: 1px solid rgba(0,240,255,0.08);
+  }
+  .colors-inner { max-width: 1100px; margin: 0 auto; }
+
+  .color-swatches {
+    display: flex;
+    gap: 12px;
+    margin-top: 48px;
+    flex-wrap: wrap;
+  }
+
+  .swatch {
+    flex: 1;
+    min-width: 80px;
+    height: 100px;
+    position: relative;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .swatch:hover { transform: scaleY(1.06); border-color: rgba(255,255,255,0.3); }
+  .swatch-glow {
+    position: absolute;
+    inset: 0;
+    opacity: 0.6;
+    transition: opacity 0.3s;
+  }
+  .swatch:hover .swatch-glow { opacity: 1; }
+  .swatch-label {
+    position: absolute;
+    bottom: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    white-space: nowrap;
+    text-transform: uppercase;
+  }
+
+  .color-desc {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .color-stat {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    background: var(--panel);
+    border-left: 2px solid var(--cyan);
+  }
+  .color-stat-num {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--cyan);
+    line-height: 1;
+  }
+  .color-stat-label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.4;
+    font-weight: 400;
+  }
+
+  /* ── SPECS ── */
+  .specs-table {
+    margin-top: 48px;
+    border: 1px solid rgba(155,48,255,0.15);
+    overflow: hidden;
+  }
+  .spec-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .spec-row:last-child { border-bottom: none; }
+  .spec-key {
+    padding: 16px 24px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: var(--panel);
+    border-right: 1px solid rgba(155,48,255,0.1);
+  }
+  .spec-val {
+    padding: 16px 24px;
+    font-size: 0.9rem;
+    color: var(--white);
+    font-weight: 400;
+    background: rgba(14,14,24,0.5);
+  }
+  .spec-val strong { color: var(--cyan); font-weight: 600; }
+
+  /* ── TÉMOIGNAGES ── */
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-top: 48px;
+  }
+  .review-card {
+    background: var(--panel);
+    padding: 28px;
+    border: 1px solid rgba(155,48,255,0.1);
+    position: relative;
+  }
+  .review-card::before {
+    content: '"';
+    position: absolute;
+    top: 16px; right: 20px;
+    font-family: 'Orbitron', monospace;
+    font-size: 3rem;
+    color: var(--violet-dim);
+    opacity: 0.4;
+    line-height: 1;
+  }
+  .stars { color: var(--violet); font-size: 0.85rem; letter-spacing: 2px; margin-bottom: 14px; }
+  .review-text { font-size: 0.9rem; line-height: 1.65; color: #bbbbd8; font-weight: 300; }
+  .review-author { margin-top: 18px; font-size: 0.75rem; font-weight: 600; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* ── FAQ ── */
+  .faq-list { margin-top: 48px; }
+  .faq-item {
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 24px 0;
+  }
+  .faq-q {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--white);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .faq-q::before { content: '?'; font-size: 0.75rem; color: var(--violet); border: 1px solid var(--violet); width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .faq-a { font-size: 0.9rem; color: var(--muted); line-height: 1.7; font-weight: 300; padding-left: 34px; }
+
+  /* ── CTA FINAL ── */
+  .cta-section {
+    background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(155,48,255,0.2) 0%, transparent 70%), var(--carbon);
+    border-top: 1px solid rgba(155,48,255,0.12);
+    padding: 100px 24px;
+    text-align: center;
+  }
+  .cta-inner { max-width: 700px; margin: 0 auto; }
+  .cta-inner .section-label { justify-content: center; }
+  .cta-inner .section-label::after { display: none; }
+  .cta-title {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-top: 16px;
+    margin-bottom: 20px;
+  }
+  .cta-title em {
+    font-style: normal;
+    background: linear-gradient(90deg, var(--violet), var(--cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .cta-sub { font-size: 1rem; color: var(--muted); font-weight: 300; line-height: 1.6; margin-bottom: 44px; }
+
+  .cta-bundle {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--panel);
+    border: 1px solid rgba(155,48,255,0.25);
+    padding: 32px 48px;
+    margin-bottom: 32px;
+  }
+  .cta-bundle-name { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .cta-bundle-price { font-family: 'Orbitron', monospace; font-size: 2.8rem; font-weight: 900; color: var(--cyan); }
+  .cta-bundle-detail { font-size: 0.8rem; color: var(--muted); margin-top: 6px; }
+
+  .cta-guarantee {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+  .cta-guarantee::before { content: '🔒'; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--void);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding: 40px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: gap;
+    gap: 20px;
+  }
+  .footer-logo { font-family: 'Orbitron', monospace; font-weight: 900; font-size: 1rem; }
+  .footer-logo span { color: var(--violet); }
+  .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+  .footer-links a { font-size: 0.78rem; color: var(--muted); text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--white); }
+  .footer-copy { font-size: 0.72rem; color: rgba(122,122,154,0.5); }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .revealed { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    nav { padding: 16px 20px; }
+    .proof-strip { gap: 24px; padding: 20px; }
+    .color-desc { grid-template-columns: 1fr; }
+    .spec-row { grid-template-columns: 1fr; }
+    .spec-key { border-right: none; border-bottom: 1px solid rgba(155,48,255,0.1); }
+    footer { flex-direction: column; text-align: center; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-bg, .badge::before { animation: none; }
+    .reveal { opacity: 1; transform: none; }
+  }
+</style>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">GHOSTBEAM<span>SHOP</span></div>
+  <button class="nav-cta" onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">Commander →</button>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="badge">Nouveau · Édition 2025</div>
+  <h1>Ambiance<br><em>Électrique</em></h1>
+  <p class="hero-sub">Lumières stroboscopiques LED sans fil, 8 couleurs, rechargeables USB-C. Voyant anti-collision intégré. Disponible en kit 2 ou 4 pièces.</p>
+  <div class="hero-actions">
+    <a href="#order" class="btn-primary">Commander maintenant</a>
+    <a href="#features" class="btn-secondary">Voir les détails ↓</a>
+  </div>
+  <div class="hero-price-tag">
+    <span class="price-old">69,99 $</span>
+    <span class="price-new">44,99 $</span>
+    <span class="price-label">CAD · Kit 2 pcs · Livraison gratuite</span>
+  </div>
+</div>
+
+<!-- PROOF STRIP -->
+<div class="proof-strip">
+  <div class="proof-item"><div class="proof-icon">⚡</div>Installation 10 min</div>
+  <div class="proof-item"><div class="proof-icon">📡</div>Sans fil · Télécommande</div>
+  <div class="proof-item"><div class="proof-icon">🔋</div>Batterie longue durée</div>
+  <div class="proof-item"><div class="proof-icon">🚗</div>Universel · Tous véhicules</div>
+  <div class="proof-item"><div class="proof-icon">🇨🇦</div>Livré au Canada</div>
+</div>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="reveal">
+    <div class="section-label">Caractéristiques</div>
+    <h2 class="section-title">Conçu pour l'expérience</h2>
+  </div>
+  <div class="features-grid reveal">
+    <div class="feature-card">
+      <div class="feature-number">01</div>
+      <div class="feature-icon-wrap">🎨</div>
+      <div class="feature-title">8 couleurs vives</div>
+      <p class="feature-desc">Rouge, vert, bleu, blanc, jaune, cyan, magenta et multicolore. Sélection rapide via la télécommande — changez d'ambiance en une seconde.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-number">02</div>
+      <div class="feature-icon-wrap">📡</div>
+      <div class="feature-title">Télécommande incluse</div>
+      <p class="feature-desc">Contrôle total depuis votre siège. Changez la couleur, l'intensité et le mode sans quitter les mains du volant.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-number">03</div>
+      <div class="feature-icon-wrap">🔧</div>
+      <div class="feature-title">Pose sans outils</div>
+      <p class="feature-desc">Fixation adhésive industrielle. Aucune modification du véhicule. Compatible avec tous les modèles, toutes les marques.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-number">04</div>
+      <div class="feature-icon-wrap">⚡</div>
+      <div class="feature-title">Mode stroboscopique</div>
+      <p class="feature-desc">Flash, strobe et effets dynamiques intégrés. Parfait pour les sorties nocturnes ou pour personnaliser votre style de conduite.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-number">05</div>
+      <div class="feature-icon-wrap">🔋</div>
+      <div class="feature-title">Rechargeable USB-C</div>
+      <p class="feature-desc">Batterie lithium rechargeable incluse. Pas de branchement permanent requis. Une charge pour plusieurs nuits de conduite.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-number">06</div>
+      <div class="feature-icon-wrap">🛡️</div>
+      <div class="feature-title">Voyant anti-collision</div>
+      <p class="feature-desc">Signalisation d'avertissement intégrée. Visible de loin, utile en cas d'urgence ou pour augmenter votre visibilité sur la route.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COULEURS -->
+<div class="colors-section">
+  <div class="colors-inner">
+    <div class="reveal">
+      <div class="section-label">Palette</div>
+      <h2 class="section-title">Votre couleur. Votre style.</h2>
+    </div>
+    <div class="color-swatches reveal">
+      <div class="swatch"><div class="swatch-glow" style="background:linear-gradient(180deg,#ff1a6e,#cc0055)"></div><div class="swatch-label">Rouge</div></div>
+      <div class="swatch"><div class="swatch-glow" style="background:linear-gradient(180deg,#ff6a00,#ee0979)"></div><div class="swatch-label">Sunset</div></div>
+      <div class="swatch"><div class="swatch-glow" style="background:linear-gradient(180deg,#9B30FF,#6B1FBF)"></div><div class="swatch-label">Violet</div></div>
+      <div class="swatch"><div class="swatch-glow" style="background:linear-gradient(180deg,#00F0FF,#0077ff)"></div><div class="swatch-label">Cyan</div></div>
+      <div class="swatch"><div class="swatch-glow" style="background:linear-gradient(180deg,#00ff87,#00bcd4)"></div><div class="swatch-label">Néon</div></div>
+      <div class="swatch"><div class="swatch-glow" style="background:linear-gradient(180deg,#fff200,#ff8c00)"></div><div class="swatch-label">Ambre</div></div>
+      <div class="swatch"><div class="swatch-glow" style="background:linear-gradient(180deg,#ff00cc,#00f0ff)"></div><div class="swatch-label">Dégradé</div></div>
+    </div>
+    <div class="color-desc reveal" style="margin-top:70px">
+      <div class="color-stat">
+        <div class="color-stat-num">8</div>
+        <div class="color-stat-label">Couleurs sélectionnables via télécommande sans fil</div>
+      </div>
+      <div class="color-stat">
+        <div class="color-stat-num">Strobo</div>
+        <div class="color-stat-label">Mode stroboscopique + voyant anti-collision intégré</div>
+      </div>
+      <div class="color-stat">
+        <div class="color-stat-num">100%</div>
+        <div class="color-stat-label">Contrôle de l'intensité lumineuse, de 0 à pleine puissance</div>
+      </div>
+      <div class="color-stat">
+        <div class="color-stat-num">2 ou 4</div>
+        <div class="color-stat-label">Modules au choix selon la couverture souhaitée</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SPECS -->
+<section>
+  <div class="reveal">
+    <div class="section-label">Spécifications</div>
+    <h2 class="section-title">Les détails qui font la différence</h2>
+  </div>
+  <div class="specs-table reveal">
+    <div class="spec-row"><div class="spec-key">LEDs par module</div><div class="spec-val"><strong>6 LEDs RGB</strong> haute luminosité</div></div>
+    <div class="spec-row"><div class="spec-key">Connexion</div><div class="spec-val">Télécommande RF sans fil — portée <strong>10 m</strong></div></div>
+    <div class="spec-row"><div class="spec-key">Alimentation</div><div class="spec-val">Batterie lithium rechargeable <strong>USB-C</strong></div></div>
+    <div class="spec-row"><div class="spec-key">Autonomie</div><div class="spec-val"><strong>10–12 heures</strong> à luminosité maximale</div></div>
+    <div class="spec-row"><div class="spec-key">Fixation</div><div class="spec-val">Adhésif 3M double face — <strong>aucun outil</strong> requis</div></div>
+    <div class="spec-row"><div class="spec-key">Matériaux</div><div class="spec-val">Boîtier alliage aluminium brossé, lentille PC</div></div>
+    <div class="spec-row"><div class="spec-key">Compatibilité</div><div class="spec-val">Universel — <strong>tous véhicules</strong> (voitures, camions, VUS)</div></div>
+    <div class="spec-row"><div class="spec-key">Contenu du kit</div><div class="spec-val">2 modules LED, 1 télécommande, câble USB-C, adhésifs</div></div>
+    <div class="spec-row"><div class="spec-key">Garantie</div><div class="spec-val"><strong>30 jours</strong> satisfait ou remboursé</div></div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section>
+  <div class="reveal">
+    <div class="section-label">Avis clients</div>
+    <h2 class="section-title">Ils ont transformé leur habitacle</h2>
+  </div>
+  <div class="review-summary reveal" style="margin-top:32px;display:flex;align-items:center;gap:20px;padding:24px;background:var(--panel);border:1px solid rgba(155,48,255,0.15);margin-bottom:0">
+    <div style="font-family:'Orbitron',monospace;font-size:3rem;font-weight:900;color:var(--cyan);line-height:1">4.6</div>
+    <div>
+      <div style="color:#f5a623;font-size:1.1rem;letter-spacing:3px">★★★★★</div>
+      <div style="font-size:0.8rem;color:var(--muted);margin-top:4px">1 949 avis d'achats vérifiés</div>
+    </div>
+  </div>
+  <div class="reviews-grid reveal">
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">Qualité incroyable!!! Diverses sélections de couleurs et de paramètres! Le jumelage s'est fait très rapidement et facilement! Facile à installer! J'en achèterais plus plus tard.</p>
+      <div class="review-author">Acheteur vérifié 🇦🇺 — 27 sept. 2025</div>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">Exactement comme décrit. Fonctionne parfaitement. Installé sous le tableau de bord et dans la zone passager — mon véhicule n'était pas équipé d'éclairage d'ambiance et je le regrettais. Plus maintenant!</p>
+      <div class="review-author">4***r 🇨🇦 — 30 août 2025</div>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">Livraison rapide, qualité au rendez-vous. Efficacité énergétique très bonne. Produit conforme à la description, je suis très satisfait de mon achat.</p>
+      <div class="review-author">A***r 🇦🇺 — 21 mars 2026</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section>
+  <div class="reveal">
+    <div class="section-label">Questions fréquentes</div>
+    <h2 class="section-title">Tout ce que vous voulez savoir</h2>
+  </div>
+  <div class="faq-list reveal">
+    <div class="faq-item">
+      <div class="faq-q">Est-ce que l'installation est vraiment simple?</div>
+      <p class="faq-a">Oui. On décolle, on colle, on allume. L'adhésif 3M est ultra solide — aucun outil, aucun branchement sur le fusible. La plupart de nos clients installent le kit en moins de 10 minutes.</p>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Ça fonctionne dans quel type de véhicule?</div>
+      <p class="faq-a">Universel. Voitures, camions, VUS, camionnettes — si vous avez un plancher de bord, ça fonctionne. Le kit couvre les 4 zones (avant gauche, avant droit, arrière gauche, arrière droit).</p>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">La batterie tient combien de temps?</div>
+      <p class="faq-a">Entre 10 et 12 heures à luminosité maximale. En mode modéré, vous pouvez facilement faire 2 à 3 jours avant de recharger via le câble USB-C fourni.</p>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Est-ce que ça distraire pendant la conduite?</div>
+      <p class="faq-a">Pas du tout. L'éclairage d'ambiance est positionné au niveau du plancher — il crée une ambiance sans éblouir le conducteur ni les autres conducteurs à l'extérieur.</p>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Quelle est votre politique de retour?</div>
+      <p class="faq-a">Satisfait ou remboursé dans les 30 jours suivant la réception. Si le produit ne vous convient pas pour n'importe quelle raison, on vous rembourse sans poser de questions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section" id="order">
+  <div class="cta-inner reveal">
+    <div class="section-label" style="justify-content:center">Commander</div>
+    <h2 class="cta-title">Prêt à changer<br>votre <em>ambiance</em>?</h2>
+    <p class="cta-sub">Télécommande, câble USB-C et adhésifs inclus. Livraison gratuite partout au Canada. Choisissez votre kit :</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:32px">
+      <div class="cta-bundle" style="flex:1;min-width:200px;max-width:260px">
+        <div class="cta-bundle-name">Kit 2 pièces</div>
+        <div class="cta-bundle-price">44,99 $</div>
+        <div class="cta-bundle-detail">Livraison gratuite · <s style="color:#555">69,99 $</s></div>
+        <a href="#" class="btn-primary" style="margin-top:20px;font-size:0.75rem;padding:14px 28px;display:inline-block">Choisir →</a>
+      </div>
+      <div class="cta-bundle" style="flex:1;min-width:200px;max-width:260px;border-color:var(--cyan);position:relative">
+        <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--cyan);color:#000;font-family:'Orbitron',monospace;font-size:0.6rem;font-weight:700;letter-spacing:0.1em;padding:4px 14px;white-space:nowrap">MEILLEURE VALEUR</div>
+        <div class="cta-bundle-name">Kit 4 pièces</div>
+        <div class="cta-bundle-price">78,99 $</div>
+        <div class="cta-bundle-detail">Livraison gratuite · Couverture complète</div>
+        <a href="#" class="btn-primary" style="margin-top:20px;font-size:0.75rem;padding:14px 28px;display:inline-block;background:linear-gradient(135deg,var(--cyan),#0077ff);box-shadow:0 0 24px rgba(0,240,255,0.3)">Choisir →</a>
+      </div>
+    </div>
+    <div class="cta-guarantee">Paiement sécurisé · Remboursement 30 jours · Livré au Canada</div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">GHOSTBEAM<span>SHOP</span></div>
+  <div class="footer-links">
+    <a href="#">Politique de confidentialité</a>
+    <a href="#">Conditions d'utilisation</a>
+    <a href="#">Retours & remboursements</a>
+    <a href="#">Contact</a>
+  </div>
+  <div class="footer-copy">© 2025 GhostBeam Shop. Tous droits réservés.</div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('revealed'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+
+{% schema %}
+{
+  "name": "GhostBeam LED",
+  "tag": "section",
+  "class": "ghostbeam-section"
+}
+{% endschema %}
